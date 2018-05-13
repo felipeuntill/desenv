@@ -4,7 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
+@Entity 
+/*Classe responsavel em representar servidor*/
 public class Server {
 
 	@Id

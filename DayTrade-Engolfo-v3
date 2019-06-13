@@ -103,9 +103,7 @@ int OnInit() {
       return INIT_PARAMETERS_INCORRECT;
    }
    
-   trade_ativo = true;
-   HistoricoDiario();    
-   HistoricoMensal();
+  
  
    InformacaoConta();
    
@@ -127,7 +125,10 @@ int OnInit() {
    //--- Desvio Permitido--------------
    m_trade.SetDeviationInPoints(desvioPermitido);
    
-   
+   trade_ativo = true;
+   trade_ativo_mes = true;
+   HistoricoDiario();    
+   HistoricoMensal();
 
    return(INIT_SUCCEEDED);
    
@@ -202,7 +203,7 @@ void backTeste() {
 void OnTick()
   {
   
-  //backTeste();
+ // backTeste();
      
    static datetime PrevBars=0;
    datetime time_0=iTime(m_symbol.Name(),Period(),0);
@@ -399,6 +400,8 @@ void HistoricoMensal() {
                  double priceAnterior = HistoryDealGetDouble(ticketAnterior,DEAL_PRICE);
                 
                  double resultado = priceAtual - priceAnterior;
+                 LOG(LOG_LEVEL_INFO, StringFormat("Preco atual: %s - Preco anterior: %s - resultado: %s - Profit: %s",
+                  DoubleToString(priceAtual),DoubleToString(priceAnterior),DoubleToString(pontos_acumulados),DoubleToString(profitAtual)));
                    
                  if (profitAtual > 0) {
                     pontos_acumulados += MathAbs(resultado); 
@@ -421,7 +424,6 @@ void HistoricoMensal() {
     LOG(LOG_LEVEL_INFO, StringFormat("Resumo Operação - Continuar operando diário: %s - Mensal: %s" ,IntegerToString(trade_ativo),IntegerToString(trade_ativo_mes))); 
 
 }
-
 
 void HistoricoDiario() {
   
